@@ -16,8 +16,9 @@ async function run() {
     try {
         await client.connect();
         const usersCollection = client.db("hr-care").collection("user");
+        const employeeRequestCollection = client.db("hr-care").collection("employeeRequest");
 
-        //nurul islam
+        //User Post API
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user)
@@ -25,6 +26,21 @@ async function run() {
             console.log(user)
         })
 
+        //Employee Request Get API
+        app.get('/employeeRequest', async (req, res) => {
+            const getemployeeRequest = employeeRequestCollection.find({});
+            const result = await getemployeeRequest.toArray();
+            res.send(result)
+            console.log(getemployeeRequest)
+        })
+
+        //Employee Request Post API
+        app.post('/employeeRequest', async (req, res) => {
+            const employeeRequest = req.body;
+            const result = await employeeRequestCollection.insertOne(employeeRequest)
+            res.send(result)
+            console.log(employeeRequest)
+        })
 
 
 
